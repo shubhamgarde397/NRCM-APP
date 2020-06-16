@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="pageHeader">
+      <ion-icon name="arrow-back-outline" style="float: left;font-size: 20px;" routerLink="/home"> </ion-icon>
+      Truck Details
+      <ion-icon name="list-outline" style="float: right;font-size: 20px;" (click)="details()" *ngIf="switcher">
+      </ion-icon>
+      <ion-icon name="return-up-back-outline" style="float: right;font-size: 20px;" (click)="details()"
+        *ngIf="!switcher">
+      </ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="switcher">
+  <ion-card>
+    <ion-card-header>
+      Owner Details
+    </ion-card-header>
+    <form [formGroup]="owner">
+      <ion-item>
+        <ion-label>TruckNumber</ion-label>
+        <ion-input type="text" formControlName="truckNo" (change)="hey()"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="truckErr">
+        <h6 style="color: red;">Invalid number</h6>
+      </ion-item>
+      <ion-item *ngIf="!trErr">
+        <h6 style="color: red;">Already Present</h6>
+      </ion-item>
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>PAN</ion-label>
+        <ion-input type="text" formControlName="pan"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Mobile 1 : </ion-label>
+        <ion-input type="number" formControlName="mobileNo1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 2 : </ion-label>
+        <ion-input type="number" formControlName="mobileNo2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 3 : </ion-label>
+        <ion-input type="number" formControlName="mobileNo3"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Village</ion-label>
+        <ion-input type="text" formControlName="village"></ion-input>
+      </ion-item>
+      <ion-button expand="block" *ngIf="!driver1" (click)="driver('1')">Add Driver</ion-button>
+      <ion-button expand="block" *ngIf="!driver1" (click)="addPan()">Submit</ion-button>
+    </form>
+  </ion-card>
+  <ion-card *ngIf="driver1">
+    <ion-card-header>
+      Driver Details
+    </ion-card-header>
+
+    <form [formGroup]="driver1todo">
+
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="drivername"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Mobile 1 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 2 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 3 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo3"></ion-input>
+      </ion-item>
+      <ion-button expand="block" *ngIf="!driver2" (click)="driver('2')">Add More</ion-button>
+      <ion-button expand="block" *ngIf="!driver2" (click)="addPan()">Submit</ion-button>
+      <ion-button expand="block" *ngIf="!driver2" (click)="driver('1')">Cancel</ion-button>
+    </form>
+  </ion-card>
+
+  <ion-card *ngIf="driver2">
+    <ion-card-header>
+      Driver Details
+    </ion-card-header>
+
+    <form [formGroup]="driver2todo">
+
+      <ion-item>
+        <ion-label>Name</ion-label>
+        <ion-input type="text" formControlName="drivername"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Mobile 1 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 2 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mobile 3 : </ion-label>
+        <ion-input type="number" formControlName="drivermobileNo3"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="addPan()">Submit</ion-button>
+      <ion-button expand="block" (click)="driver('2')">Cancel</ion-button>
+    </form>
+  </ion-card>
+
+</ion-content>
+
+<ion-content *ngIf="!switcher">
+  <ion-list>
+    <ion-item *ngFor="let i of owners;let j =index;">
+      <ion-label (click)="presentAlert(i,j)">{{i.truckNo}} <a class="phone-call" href={{i.mobileNo|telephone}}>
+          <ion-icon name="call-outline" *ngIf="((i.mobileNo!='tel:+91Empty')&&(i.mobileNo!='Empty'))"></ion-icon>
+        </a>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
